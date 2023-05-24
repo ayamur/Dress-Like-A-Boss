@@ -1,13 +1,13 @@
 // npm modules
 import { useState } from 'react'
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 // page components
 import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
 import Landing from './pages/Landing/Landing'
-import Profiles from './pages/Profiles/Profiles'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
+import Quiz from './pages/Quiz/Quiz'
 
 // components
 import NavBar from './components/NavBar/NavBar'
@@ -15,6 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 // services
 import * as authService from './services/authService'
+import * as quizService from './services/quizService'
 
 // styles
 import './App.css'
@@ -22,6 +23,7 @@ import './App.css'
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
   const navigate = useNavigate()
+  const [quiz, setQuiz] = useState([])
 
   const handleLogout = () => {
     authService.logout()
@@ -46,14 +48,12 @@ const App = () => {
           path="/login"
           element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
         />
-        <Route
-          path="/profiles"
+        {/* <Route
+          path="/quiz"
           element={
-            <ProtectedRoute user={user}>
-              <Profiles />
-            </ProtectedRoute>
+              <Quiz quiz={quiz} />
           }
-        />
+        /> */}
         <Route
           path="/change-password"
           element={
